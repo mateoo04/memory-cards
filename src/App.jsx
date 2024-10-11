@@ -1,35 +1,49 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from 'react';
+import reactLogo from './assets/react.svg';
+import viteLogo from '/vite.svg';
+import './App.css';
+import MemoryCards from './components/MemoryCards.jsx';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [pokemons, setPokemons] = useState([]);
+  const [cardQuantity, setCardQuantity] = useState(4);
+
+  //appends a new element in the 'pokemons' array on mount and url change
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        let fetchedData = [];
+        for (let i = 0; i < cardQuantity; i++) {
+          const response = await fetch(
+            `https://pokeapi.co/api/v2/pokemon/${Math.ceil(
+              Math.random() * 1000
+            )}`
+          );
+          const data = await response.json();
+
+          const fetchedName = data.forms[0].name;
+
+          fetchedData.push({
+            name: fetchedName[0].toUpperCase() + fetchedName.slice(1),
+            imageUrl: data.sprites.other.home.front_default,
+            wasClicked: false,
+          });
+        }
+
+        setPokemons(fetchedData);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+
+    fetchData();
+  }, [cardQuantity]);
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      {pokemons.length === cardQuantity && <MemoryCards pokemons={pokemons} />}
     </>
-  )
+  );
 }
 
-export default App
+export default App;
