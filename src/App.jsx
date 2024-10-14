@@ -3,73 +3,77 @@ import reactLogo from './assets/react.svg';
 import viteLogo from '/vite.svg';
 import './App.css';
 import MemoryCards from './components/MemoryCards.jsx';
+import Modal from './components/Modal.jsx';
 import testImage from './assets/test-image.png';
 
 function App() {
   const [data, setData] = useState([]);
-  const [cardQuantity, setCardQuantity] = useState(10);
+  const [cardQuantity, setCardQuantity] = useState(4);
   const [gameCounter, setGameCounter] = useState(0);
   const [bestScore, setBestScore] = useState(0);
   const [currentScore, setCurrentScore] = useState(0);
+  //game status may be: lost, won or ongoing
+  const [gameStatus, setGameStatus] = useState('ongoing');
 
   useEffect(() => {
     console.log('data fetching effect running');
 
-    if (process.env.NODE_ENV === 'development') {
-      setData([
-        {
-          name: 'Flapple',
-          imageUrl: testImage,
-          wasClicked: false,
-        },
-        {
-          name: 'Ninjask',
-          imageUrl: testImage,
-          wasClicked: false,
-        },
-        {
-          name: 'Venipede',
-          imageUrl: testImage,
-          wasClicked: false,
-        },
-        {
-          name: 'Dracozolt',
-          imageUrl: testImage,
-          wasClicked: false,
-        },
-        {
-          name: 'Machoke',
-          imageUrl: testImage,
-          wasClicked: false,
-        },
-        {
-          name: 'Obi',
-          imageUrl: testImage,
-          wasClicked: false,
-        },
-        {
-          name: 'Dodrio',
-          imageUrl: testImage,
-          wasClicked: false,
-        },
-        {
-          name: 'Tinkatink',
-          imageUrl: testImage,
-          wasClicked: false,
-        },
-        {
-          name: 'Clamperl',
-          imageUrl: testImage,
-          wasClicked: false,
-        },
-        {
-          name: 'Fearow',
-          imageUrl: testImage,
-          wasClicked: false,
-        },
-      ]);
-      return;
-    }
+    // if (process.env.NODE_ENV === 'development') {
+    //   setData([
+    //     {
+    //       name: 'Flapple',
+    //       imageUrl: testImage,
+    //       wasClicked: false,
+    //     },
+    //     {
+    //       name: 'Ninjask',
+    //       imageUrl: testImage,
+    //       wasClicked: false,
+    //     },
+    // {
+    //   name: 'Venipede',
+    //   imageUrl: testImage,
+    //   wasClicked: false,
+    // },
+    // {
+    //   name: 'Dracozolt',
+    //   imageUrl: testImage,
+    //   wasClicked: false,
+    // },
+    // ,
+    // {
+    //   name: 'Machoke',
+    //   imageUrl: testImage,
+    //   wasClicked: false,
+    // },
+    // {
+    //   name: 'Obi',
+    //   imageUrl: testImage,
+    //   wasClicked: false,
+    // },
+    // {
+    //   name: 'Dodrio',
+    //   imageUrl: testImage,
+    //   wasClicked: false,
+    // },
+    // {
+    //   name: 'Tinkatink',
+    //   imageUrl: testImage,
+    //   wasClicked: false,
+    // },
+    // {
+    //   name: 'Clamperl',
+    //   imageUrl: testImage,
+    //   wasClicked: false,
+    // },
+    // {
+    //   name: 'Fearow',
+    //   imageUrl: testImage,
+    //   wasClicked: false,
+    // },
+    // ]);
+    //   return;
+    // }
 
     const fetchData = async () => {
       const randoms = new Set();
@@ -81,7 +85,10 @@ function App() {
       console.log(randoms);
 
       try {
-        let newData = [...data];
+        let newData = data.map((item) => {
+          return { ...item, wasClicked: false };
+        });
+
         for (const item of randoms) {
           console.log(item);
 
@@ -111,13 +118,26 @@ function App() {
     fetchData();
   }, [gameCounter]);
 
+  const setUpNewGame = () => {
+    setGameStatus('ongoing');
+    setGameCounter(gameCounter + 1);
+    setCurrentScore(0);
+  };
+
+  const continueToTheNextLevel = () => {
+    setCardQuantity(cardQuantity + 2);
+
+    setUpNewGame();
+  };
+
   const handleCardClick = (clickedCard) => {
     console.log(clickedCard.name + ' clicked');
 
     if (clickedCard.wasClicked) {
-      //end of the game
-      setGameCounter(gameCounter + 1);
-      setCurrentScore(0);
+      //handle losing
+      setGameStatus('lost');
+
+      console.log('game lost');
     } else {
       setCurrentScore(currentScore + 1);
       if (bestScore === currentScore) setBestScore(currentScore + 1);
@@ -133,9 +153,9 @@ function App() {
       setData(newArray);
 
       if (newArray.every((item) => item.wasClicked)) {
-        if (cardQuantity < 10) {
-          setCardQuantity(cardQuantity + 2);
-        }
+        setGameStatus('won');
+
+        console.log('game won');
       }
 
       console.log(`current score: ${currentScore}, best score: ${bestScore}`);
@@ -160,6 +180,23 @@ function App() {
           <MemoryCards handleCardClick={handleCardClick} data={data} />
         )}
       </main>
+      {data.length !== cardQuantity && <div className='loader'></div>}
+      {gameStatus === 'won' && (
+        <Modal
+          title={'Congrats! You won this round.'}
+          message={'Do you want to continue?'}
+          buttonText='CONTINUE'
+          onClose={continueToTheNextLevel}
+        />
+      )}
+      {gameStatus === 'lost' && (
+        <Modal
+          title={'You lost.'}
+          message={'Do you want to try again?'}
+          buttonText={'TRY AGAIN'}
+          onClose={setUpNewGame}
+        />
+      )}
     </>
   );
 }

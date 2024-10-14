@@ -38,4 +38,7 @@
   display: grid;
   justify-content: center;
   gap: 10px;
+  width: 100%;
+  grid-auto-rows: min-content;
+  transform: translateY(-68px);
 }
