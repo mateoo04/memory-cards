@@ -1,6 +1,4 @@
 import { useEffect, useState } from 'react';
-import reactLogo from './assets/react.svg';
-import viteLogo from '/vite.svg';
 import './App.css';
 import MemoryCards from './components/MemoryCards.jsx';
 import Modal from './components/Modal.jsx';
@@ -17,63 +15,6 @@ function App() {
 
   useEffect(() => {
     console.log('data fetching effect running');
-
-    // if (process.env.NODE_ENV === 'development') {
-    //   setData([
-    //     {
-    //       name: 'Flapple',
-    //       imageUrl: testImage,
-    //       wasClicked: false,
-    //     },
-    //     {
-    //       name: 'Ninjask',
-    //       imageUrl: testImage,
-    //       wasClicked: false,
-    //     },
-    // {
-    //   name: 'Venipede',
-    //   imageUrl: testImage,
-    //   wasClicked: false,
-    // },
-    // {
-    //   name: 'Dracozolt',
-    //   imageUrl: testImage,
-    //   wasClicked: false,
-    // },
-    // ,
-    // {
-    //   name: 'Machoke',
-    //   imageUrl: testImage,
-    //   wasClicked: false,
-    // },
-    // {
-    //   name: 'Obi',
-    //   imageUrl: testImage,
-    //   wasClicked: false,
-    // },
-    // {
-    //   name: 'Dodrio',
-    //   imageUrl: testImage,
-    //   wasClicked: false,
-    // },
-    // {
-    //   name: 'Tinkatink',
-    //   imageUrl: testImage,
-    //   wasClicked: false,
-    // },
-    // {
-    //   name: 'Clamperl',
-    //   imageUrl: testImage,
-    //   wasClicked: false,
-    // },
-    // {
-    //   name: 'Fearow',
-    //   imageUrl: testImage,
-    //   wasClicked: false,
-    // },
-    // ]);
-    //   return;
-    // }
 
     const fetchData = async () => {
       const randoms = new Set();
@@ -125,7 +66,7 @@ function App() {
   };
 
   const continueToTheNextLevel = () => {
-    setCardQuantity(cardQuantity + 2);
+    if (cardQuantity < 30) setCardQuantity(cardQuantity + 2);
 
     setUpNewGame();
   };
@@ -179,8 +120,8 @@ function App() {
         {data.length === cardQuantity && (
           <MemoryCards handleCardClick={handleCardClick} data={data} />
         )}
+        {data.length !== cardQuantity && <div className='loader'></div>}
       </main>
-      {data.length !== cardQuantity && <div className='loader'></div>}
       {gameStatus === 'won' && (
         <Modal
           title={'Congrats! You won this round.'}

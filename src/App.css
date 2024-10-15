@@ -27,18 +27,36 @@ img {
 
 #root {
   width: 100%;
-  padding: 0 20px 20px 20px;
   height: 100vh;
   display: flex;
   flex-direction: column;
+  align-items: center;
+}
+
+@media (max-width: 500px) {
+  header {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .scores {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
 }
 
 header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 0;
-  margin-bottom: 16px;
+  padding: 10px 20px;
+  box-sizing: border-box;
+  margin-top: 6px;
+  margin-bottom: 6px;
+  width: min(100%, 1300px);
+  text-align: center;
 }
 
 header h1 {
@@ -55,11 +73,14 @@ header h1 {
 
 main {
   width: 100%;
-  margin: 0 auto;
   flex-grow: 1;
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: center;
+  background: linear-gradient(red, white 66%);
+  padding: 10px 0 20px 0;
+  position: relative;
 }
 
 .loader {
@@ -69,10 +90,7 @@ main {
   border-radius: 50%;
   display: inline-block;
   box-sizing: border-box;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  position: relative;
   animation: pulse 1s linear infinite;
 }
 .loader:after {
