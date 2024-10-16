@@ -7,15 +7,14 @@ export default function MemoryCards({
   handleCardClick,
   disappearingAnimation,
   goLeftwardsAnimation,
+  animateOnRender,
 }) {
   const shuffledData = [...data];
-
   for (let i = data.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
 
     [shuffledData[i], shuffledData[j]] = [shuffledData[j], shuffledData[i]];
   }
-
   return (
     <div
       className={`card-container card-container-${shuffledData.length}`}
@@ -24,6 +23,7 @@ export default function MemoryCards({
       {shuffledData.map((item) => {
         return (
           <Card
+            animateOnRender={animateOnRender}
             goLeftwardsAnimation={goLeftwardsAnimation}
             disappearingAnimation={disappearingAnimation}
             key={Date.now() + item.name}

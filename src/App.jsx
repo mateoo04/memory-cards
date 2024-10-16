@@ -12,6 +12,7 @@ function App() {
   const [currentScore, setCurrentScore] = useState(0);
   //game status may be: lost, won or ongoing
   const [gameStatus, setGameStatus] = useState('ongoing');
+  const [showHowToPlayDialog, setShowHowToPlayDialog] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -119,10 +120,23 @@ function App() {
             data={data}
             disappearingAnimation={gameStatus === 'lost' ? true : false}
             goLeftwardsAnimation={gameStatus === 'won' ? true : false}
+            animateOnRender={
+              showHowToPlayDialog || gameStatus !== 'ongoing' ? false : true
+            }
           />
         )}
         {data.length !== cardQuantity && <div className='loader'></div>}
       </main>
+      {showHowToPlayDialog && (
+        <Modal
+          title={'How to play?'}
+          message={
+            'Each card can only be clicked once to continue the game. By clicking on the same card for a second time, you lose and may start over. Card quantity is increased on each level. Good luck playing!'
+          }
+          buttonText='PLAY'
+          onClose={() => setShowHowToPlayDialog(false)}
+        />
+      )}
       {gameStatus === 'won' && (
         <Modal
           title={'Congrats! You won this round.'}
@@ -139,6 +153,12 @@ function App() {
           onClose={setUpNewGame}
         />
       )}
+      <button
+        onClick={() => setShowHowToPlayDialog(true)}
+        className='how-to-play-button'
+      >
+        ?
+      </button>
     </>
   );
 }

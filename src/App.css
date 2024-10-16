@@ -92,6 +92,21 @@ main {
   position: relative;
 }
 
+.how-to-play-button {
+  position: fixed;
+  bottom: 5%;
+  right: 5%;
+  height: 64px;
+  width: 64px;
+  text-align: center;
+  padding: 0;
+  border-radius: 50%;
+  background-color: #000;
+  color: #fff;
+  font-weight: 900;
+  font-size: 2em;
+}
+
 .loader {
   width: 48px;
   height: 48px;

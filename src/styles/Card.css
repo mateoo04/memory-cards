@@ -39,7 +39,6 @@
 }
 
 .card .back {
-  animation: hide-back 1s ease-in-out forwards;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -48,13 +47,20 @@
 }
 
 .card .front {
-  animation: show-front 1s ease-in-out forwards;
   padding: 10px;
   box-sizing: border-box;
   font-size: 0.8em;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+.animate-show-front {
+  animation: show-front 1s ease-in-out forwards;
+}
+
+.animate-hide-back {
+  animation: hide-back 1s ease-in-out forwards;
 }
 
 .card .front:hover {
@@ -73,6 +79,10 @@
 
 .disappear-leftwards {
   animation: leftwards 0.7s ease-out forwards;
+}
+
+.animate-on-first-display {
+  animation: first-display 0.7 ease-in forwards;
 }
 
 @keyframes show-front {

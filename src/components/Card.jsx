@@ -9,6 +9,7 @@ export default function Card({
   handleCardClick,
   disappearingAnimation,
   goLeftwardsAnimation,
+  animateOnRender,
 }) {
   return (
     <div
@@ -17,11 +18,11 @@ export default function Card({
       } ${goLeftwardsAnimation ? 'disappear-leftwards' : ''}`}
       onClick={handleCardClick}
     >
-      <div className='front'>
+      <div className={`front ${animateOnRender ? 'animate-show-front' : ''}`}>
         <img src={imageUrl} alt='' />
         <h2>{name}</h2>
       </div>
-      <div className='back'>
+      <div className={`back ${animateOnRender ? 'animate-hide-back' : ''}`}>
         <img src={BackIcon} alt='' />
       </div>
     </div>
