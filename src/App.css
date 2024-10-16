@@ -34,7 +34,7 @@ img {
 }
 
 @media (max-width: 500px) {
-  header {
+  .header-content {
     flex-direction: column;
     gap: 10px;
   }
