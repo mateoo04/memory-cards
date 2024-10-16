@@ -35,6 +35,7 @@
   backface-visibility: hidden;
   top: 0;
   left: 0;
+  cursor: pointer;
 }
 
 .card .back {
@@ -54,6 +55,10 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+.card .front:hover {
+  box-shadow: 2px 3px 3px #000000;
 }
 
 .card .back img {

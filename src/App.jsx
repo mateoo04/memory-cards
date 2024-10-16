@@ -92,14 +92,24 @@ function App() {
   return (
     <>
       <header>
-        <h1>Memory Cards</h1>
-        <div className='scores'>
-          <p>
-            Current score: <span className='current-score'>{currentScore}</span>
-          </p>
-          <p>
-            Best score: <span className='best-score'>{bestScore}</span>
-          </p>
+        <div className='header-content'>
+          <h1>Memory Cards</h1>
+          <div className='scores'>
+            <p>
+              Current score:{' '}
+              <span className='current-score'>{currentScore}</span>
+            </p>
+            <p
+              style={{
+                color:
+                  bestScore === currentScore && bestScore > 0
+                    ? '#FF0000'
+                    : '#000',
+              }}
+            >
+              Best score: <span className='best-score'>{bestScore}</span>
+            </p>
+          </div>
         </div>
       </header>
       <main>

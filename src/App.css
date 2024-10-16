@@ -48,15 +48,23 @@ img {
 }
 
 header {
+  position: sticky;
+  top: 0;
+  background-color: #fff;
+  z-index: 1;
+  box-shadow: 0 4px 10px #808080;
+  width: 100%;
+}
+
+.header-content {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
   box-sizing: border-box;
-  margin-top: 6px;
-  margin-bottom: 6px;
   width: min(100%, 1300px);
   text-align: center;
+  margin: 0 auto;
 }
 
 header h1 {
@@ -78,7 +86,8 @@ main {
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(red, white 80%);
+  background: linear-gradient(#ff0000, white 80%);
+  background-attachment: fixed;
   padding: 10px 0 20px 0;
   position: relative;
 }
