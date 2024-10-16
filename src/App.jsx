@@ -14,8 +14,6 @@ function App() {
   const [gameStatus, setGameStatus] = useState('ongoing');
 
   useEffect(() => {
-    console.log('data fetching effect running');
-
     const fetchData = async () => {
       const randoms = new Set();
 
@@ -23,16 +21,12 @@ function App() {
         randoms.add(Math.ceil(Math.random() * 1000));
       }
 
-      console.log(randoms);
-
       try {
         let newData = data.map((item) => {
           return { ...item, wasClicked: false };
         });
 
         for (const item of randoms) {
-          console.log(item);
-
           const response = await fetch(
             `https://pokeapi.co/api/v2/pokemon/${item}`
           );
@@ -72,13 +66,9 @@ function App() {
   };
 
   const handleCardClick = (clickedCard) => {
-    console.log(clickedCard.name + ' clicked');
-
     if (clickedCard.wasClicked) {
       //handle losing
       setGameStatus('lost');
-
-      console.log('game lost');
     } else {
       setCurrentScore(currentScore + 1);
       if (bestScore === currentScore) setBestScore(currentScore + 1);
@@ -95,11 +85,7 @@ function App() {
 
       if (newArray.every((item) => item.wasClicked)) {
         setGameStatus('won');
-
-        console.log('game won');
       }
-
-      console.log(`current score: ${currentScore}, best score: ${bestScore}`);
     }
   };
 
@@ -118,7 +104,12 @@ function App() {
       </header>
       <main>
         {data.length === cardQuantity && (
-          <MemoryCards handleCardClick={handleCardClick} data={data} />
+          <MemoryCards
+            handleCardClick={handleCardClick}
+            data={data}
+            disappearingAnimation={gameStatus === 'lost' ? true : false}
+            goLeftwardsAnimation={gameStatus === 'won' ? true : false}
+          />
         )}
         {data.length !== cardQuantity && <div className='loader'></div>}
       </main>

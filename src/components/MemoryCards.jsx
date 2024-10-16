@@ -1,7 +1,13 @@
 import Card from './Card.jsx';
 import '../styles/MemoryCards.css';
+import { useEffect, useState } from 'react';
 
-export default function MemoryCards({ data, handleCardClick }) {
+export default function MemoryCards({
+  data,
+  handleCardClick,
+  disappearingAnimation,
+  goLeftwardsAnimation,
+}) {
   const shuffledData = [...data];
 
   for (let i = data.length - 1; i > 0; i--) {
@@ -11,11 +17,16 @@ export default function MemoryCards({ data, handleCardClick }) {
   }
 
   return (
-    <div className={`card-container card-container-${shuffledData.length}`}>
+    <div
+      className={`card-container card-container-${shuffledData.length}`}
+      style={{ overflowX: 'hidden' }}
+    >
       {shuffledData.map((item) => {
         return (
           <Card
-            key={item.name}
+            goLeftwardsAnimation={goLeftwardsAnimation}
+            disappearingAnimation={disappearingAnimation}
+            key={Date.now() + item.name}
             name={item.name}
             imageUrl={item.imageUrl}
             handleCardClick={() => handleCardClick(item)}
