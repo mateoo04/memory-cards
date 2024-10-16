@@ -78,7 +78,7 @@ main {
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(red, white 66%);
+  background: linear-gradient(red, white 80%);
   padding: 10px 0 20px 0;
   position: relative;
 }

@@ -1,13 +1,13 @@
 @media (max-width: 499px) {
   .card {
-    aspect-ratio: 4/5;
+    aspect-ratio: 4/5.2;
   }
 }
 
 @media (min-width: 500px) {
   .card {
     width: 200px;
-    height: 236px;
+    height: 250px;
   }
 }
 
