@@ -131,7 +131,7 @@ function App() {
         <Modal
           title={'How to play?'}
           message={
-            'Each card can only be clicked once to continue the game. By clicking on the same card for a second time, you lose and may start over. Card quantity is increased on each level. Good luck playing!'
+            'Each card can only be clicked once to continue the game. By clicking the same card for a second time, you lose, but you may start over. Card quantity is increased on each level. Good luck playing!'
           }
           buttonText='PLAY'
           onClose={() => setShowHowToPlayDialog(false)}
